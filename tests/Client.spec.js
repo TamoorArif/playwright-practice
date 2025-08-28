@@ -5,11 +5,19 @@ test.only('First playwright Test case' , async ({browser})=> {
 //    chorom - Plugins / cookies
   const context= await browser.newContext();
   const page = await context.newPage();
+
+// variable declaration
+  const useremail=page.locator('#userEmail');
+  const userpassword=page.locator("#userPassword");
+  const loginBtn=page.locator('#login');
+  const cardTitles=page.locator('.card-body b');
+
+
   await page.goto("https://rahulshettyacademy.com/client/#/auth/login");
-  await page.locator('#userEmail').fill('duxaqeq@mailinator.com')
-  await page.locator("#userPassword").fill('Test@12345')
-  await page.locator('#login').click()
-  console.log('Cardbdy1:::',await page.locator('.card-body b').first().textContent())
-  console.log('allcardnam:', await page.locator('.card-body b').allTextContents())
+  await useremail.fill('duxaqeq@mailinator.com')
+  await userpassword.fill('Test@12345')
+  await loginBtn.click()
+  console.log('Cardbdy1:::',await cardTitles.first().textContent())
+  console.log('allcardnam:', await cardTitles.allTextContents())
 
 })
