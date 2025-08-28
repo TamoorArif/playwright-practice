@@ -22,7 +22,7 @@ const config= {
   report: 'html',
 
   use:{
-    browserName :'webkit',
+    browserName :'chromium',
     headless : false
   }
 
