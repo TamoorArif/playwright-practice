@@ -28,10 +28,35 @@ test('First playwright Test case' , async ({browser})=> {
    
 })
 
-// test('page playwright test' , async ({page})=> {
-//      await page.goto("https:www.google.com")
-// //      get assersation
-// console.log(await page.title());     
-//     await expect(page).toHaveTitle('Google')
+test('Ui controls' , async ({page})=> {
+   await page.goto("https://rahulshettyacademy.com/loginpagePractise/");
+   const userName = page.locator("#username");
+   const signIn= page.locator("#signInBtn");
+   const dropdown= page.locator('select.form-control');
+   const documentsLink=page.locator('[href*="documents-request"]');
+   await dropdown.selectOption('consult');
+   await page.locator('.radiotextsty').last().click();
+   await page.locator('#okayBtn').click()
 
-// })
+
+   // if you want to try that radio button is checked or then you can use bolien with consol.log which is not assersation 
+   console.log(await page.locator('.radiotextsty').last().isChecked());
+
+   // if you want asseration then use this 
+   await expect(page.locator('.radiotextsty').last()).toBeChecked();
+   await page.locator('#terms').click();
+   await expect(page.locator('#terms')).toBeChecked();
+   await page.locator('#terms').uncheck();
+   expect(await page.locator('#terms').isChecked()).toBeFalsy();
+   await expect(documentsLink).toHaveAttribute('class', 'blinkingText');
+   
+   // await page.pause();
+
+
+})
+test.only('chlid windowshandling' , async ({page})=> {
+   await page.goto("https://rahulshettyacademy.com/loginpagePractise/");
+   
+
+
+})

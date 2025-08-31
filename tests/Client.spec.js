@@ -1,7 +1,7 @@
 const {test, expect}= require('@playwright/test');
 
 
-test.only('First playwright Test case' , async ({browser})=> {
+test('First playwright Test case' , async ({browser})=> {
 //    chorom - Plugins / cookies
   const context= await browser.newContext();
   const page = await context.newPage();
@@ -14,10 +14,15 @@ test.only('First playwright Test case' , async ({browser})=> {
 
 
   await page.goto("https://rahulshettyacademy.com/client/#/auth/login");
-  await useremail.fill('duxaqeq@mailinator.com')
-  await userpassword.fill('Test@12345')
-  await loginBtn.click()
-  console.log('Cardbdy1:::',await cardTitles.first().textContent())
-  console.log('allcardnam:', await cardTitles.allTextContents())
+  await useremail.fill('duxaqeq@mailinator.com');
+  await userpassword.fill('Test@12345');
+  await loginBtn.click();
+  await page.waitForLoadState('networkidle');
+  
+  // if we want to wait for specific element use .waitfor() eg;
+  // await cardsTitels.first().waitFor();
+
+  console.log('Cardbdy1:::',await cardTitles.first().textContent());
+  console.log('allcardnam:', await cardTitles.allTextContents());
 
 })
