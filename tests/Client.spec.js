@@ -21,7 +21,7 @@ test('First playwright Test case', async ({ browser }) => {
   await loginBtn.click();
   await page.waitForLoadState('networkidle');
   const titles = await page.locator('.card-body b').allTextContents();
-  console.log(titles);
+  console.log('Titles:::', titles);
   const count = await products.count();
   for (let i = 0; i < count; ++i) {
 
@@ -57,17 +57,21 @@ test('First playwright Test case', async ({ browser }) => {
   await page.locator("[placeholder*='Country']").pressSequentially("ind");
   const dropdown1 = page.locator(".ta-results");
   await dropdown1.waitFor()
-  const optionCount = dropdown1.locator("button").count();
-  for (
-    let i = 0; i < optionCount; i++
-  ) {
-    const text = dropdown1.locator("button").nth(i).textContent();
+  const optionCount = await dropdown1.locator("button").count();
+  
+  for (let i = 0; i < optionCount; i++) {
+    const text = await dropdown1.locator("button").nth(i).textContent();
     if (text === " India") {
       await dropdown1.locator('button').nth(i).click();
       break;
     }
-    expect(await page.locator(".user_name[type='text']").first()).toHaveText(email)
   }
+  await expect(page.locator(".user__name [type='text']").first()).toHaveText(email);
+    await page.locator('.btnn.action__submit').click();
+    await expect(page.locator('.hero-primary')).toHaveText(' Thankyou for the order. ');
+
+    const orderID= await page.locator('.em-spacer-1 .ng-star-inserted').textContent();
+    console.log(orderID);
 
 
 
