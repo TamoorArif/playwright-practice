@@ -71,7 +71,44 @@ test('First playwright Test case', async ({ browser }) => {
     await expect(page.locator('.hero-primary')).toHaveText(' Thankyou for the order. ');
 
     const orderID= await page.locator('.em-spacer-1 .ng-star-inserted').textContent();
-    console.log(orderID);
+    console.log('ORDERID',orderID);
+    console.log('ORDERID TypeLL ',typeof orderID);
+    await page.locator('button[routerlink="/dashboard/myorders"]').click();
+    await page.locator('tbody').waitFor();
+    // const findrow = await page.locator('.table tbody tr th').count()
+    // await page.locator('table tbody tr th').first().waitFor({ state: 'visible' });
+    // const rowCount = await page.locator('table tbody tr th').count();
+
+    // for(let i=0; i<rowCount; i++){
+    //       const text = await page.locator("table tbody tr th").nth(i).textContent();
+    //       if(text === orderID ){
+    //         console.log("idtext",text)
+    //         break;
+
+    //       }
+
+    // }
+    await page.locator('tbody tr').first();
+    const rows = await page.locator("tbody tr");
+    const rowCount = await rows.count();
+     console.log("👉 Total Rows Found:", rowCount);
+     for (let i = 0; i < rowCount; i++) {
+  const rowOrderId = (await rows.nth(i).locator("th").textContent()).trim();
+
+  const cleanRowId = rowOrderId.replace(/\|/g, "").trim();
+  const cleanOrderId = orderID.replace(/\|/g, "").trim();
+
+  console.log("🔍 Comparing:", cleanRowId, "==", cleanOrderId);
+
+  if (cleanRowId === cleanOrderId) {
+    console.log("✅ Matched Order ID:", cleanRowId);
+    await rows.nth(i).locator("button").first().click();
+    break;
+  }
+}
+      //  const orderidDetails= await page.locator('.col-text').textContent();
+      //  expect(orderID.includes(orderidDetails)).toBeTruthy();
+
 
 
 
