@@ -1,60 +1,48 @@
 // @ts-check
-import { chromium, defineConfig, devices } from '@playwright/test';
-import { report } from 'process';
+import { defineConfig, devices } from '@playwright/test';
 
-/**
- * Read environment variables from file.
- * https://github.com/motdotla/dotenv
- */
-// import dotenv from 'dotenv';
-// import path from 'path';
-// dotenv.config({ path: path.resolve(__dirname, '.env') });
-
-/**
- * @see https://playwright.dev/docs/test-configuration
- */
-const config= {
-  testDir: './tests',
-  timeout:40 *1000,
-  expect : {
-    timeout: 40*1000
+export default defineConfig({
+  testDir: './tests',              // Folder where your test files are stored
+  timeout: 40 * 1000,              // Global timeout for each test (40 seconds)
+  expect: {
+    timeout: 40 * 1000             // Timeout for expect() assertions
   },
-  report: 'html',
+
+  reporter: 'html',                // Generate an HTML report after tests
 
   projects: [
-    /* Test against desktop browsers */
-    // {
-    //   name: 'chromium',
-    //   use: { ...devices['Desktop Chrome'] },
-    // },
-    // {
-    //   name: 'firefox',
-    //   use: { ...devices['Desktop Firefox'] },
-    // },
+    // ✅ Desktop Browsers
     {
-      name: 'webkit',
+      name: 'Chromium',
+      use: { ...devices['Desktop Chrome'] },
+    },
+    {
+      name: 'Firefox',
+      use: { ...devices['Desktop Firefox'] },
+    },
+    {
+      name: 'WebKit', // Safari
       use: { ...devices['Desktop Safari'] },
     },
-    /* Test against mobile viewports. */
-    // {
-    //   name: 'Mobile Chrome',
-    //   use: { ...devices['Pixel 5'] },
-    // },
-    // {
-    //   name: 'Mobile Safari',
-    //   use: { ...devices['iPhone 12'] },
-    // },
-    // /* Test against branded browsers. */
-    // {
-    //   name: 'Google Chrome',
-    //   use: { ...devices['Desktop Chrome'], channel: 'chrome' }, // or 'chrome-beta'
-    // },
-    // {
-    //   name: 'Microsoft Edge',
-    //   use: { ...devices['Desktop Edge'], channel: 'msedge' }, // or 'msedge-dev'
-    // },
+
+    // ✅ Mobile Devices
+    {
+      name: 'Mobile Chrome',
+      use: { ...devices['Pixel 5'] },
+    },
+    {
+      name: 'Mobile Safari',
+      use: { ...devices['iPhone 12'] },
+    },
+
+    // ✅ Branded Browsers (real Chrome/Edge channels)
+    {
+      name: 'Google Chrome',
+      use: { ...devices['Desktop Chrome'], channel: 'chrome' }, // or 'chrome-beta'
+    },
+    {
+      name: 'Microsoft Edge',
+      use: { ...devices['Desktop Edge'], channel: 'msedge' },   // or 'msedge-dev'
+    },
   ],
-
-}
-module.exports=config
-
+});
